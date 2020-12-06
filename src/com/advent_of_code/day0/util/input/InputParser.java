@@ -34,6 +34,37 @@ public class InputParser {
 		return lst;
 	}
 	
+	public static List<String> toStringList(String dir, String filename, String separator, boolean useSpace) {
+		List<String> lst = new ArrayList<String>();
+		if(dir == null) {
+			dir = DEFAULT_FOLDER;
+		}
+		String fileURL = String.format("%s%s", dir, filename);
+		File f = new File(fileURL);
+
+		try {
+			Scanner reader = new Scanner(f);
+			String tmp = "";
+			while (reader.hasNext()) {
+				String nextLine = reader.nextLine();
+				if(nextLine.equals(separator)) {
+					lst.add(tmp);
+					tmp = "";
+				} else {
+					tmp += useSpace ? " " : "" + nextLine;
+				}
+				
+			}
+			lst.add(tmp);
+			reader.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return lst;
+	}
+	
 	public static String[][] toStringGrid(String dir, String filename) {
 		
 		List<String> lst = toStringList(dir, filename);
