@@ -1,6 +1,7 @@
 package com.advent_of_code.day10.code;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.advent_of_code.day0.util.input.EInputType;
@@ -14,8 +15,10 @@ public class Day10 {
 
 		List<Adapter> adps = getAdapters(lst);
 		setRoutes(adps);
-
-		System.out.println("part 2 : " + part2(adps));
+		System.out.println(Arrays.toString(lst.toArray()));
+		int c = 1 + (lst.get(1) == 2 ? 1 :0) + (lst.get(2) == 3 ? 1 :0);
+		System.out.println(c);
+		System.out.println("part 2 : " + part2(adps, c));
 
 	}
 
@@ -35,11 +38,12 @@ public class Day10 {
 		return ons * trs;
 	}
 
-	public static long part2(List<Adapter> lst) {
-
-		return lst.get(0).getRoutes()
-				+ (lst.get(0).isTo1() ? lst.get(1).getRoutes() : 0)
-				+ (lst.get(0).isTo2() ? lst.get(2).getRoutes() : 0);
+	public static long part2(List<Adapter> lst, int c) {
+		long res = 0;
+		for(int i = 0; i < c; i++) {
+			res += lst.get(i).getRoutes();
+		}
+		return res;
 	}
 
 	public static void setRoutes(List<Adapter> adps) {
